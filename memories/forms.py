@@ -47,7 +47,7 @@ class FileFieldForm(forms.Form):
     helper = FormHelper()
     helper.add_input(Submit('submit', 'Submit', css_class='button is-primary'))
     helper.form_method = 'POST'
-    images_field = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    images_field = forms.ImageField(widget=forms.ClearableFileInput(attrs={'allow_multiple_selected': True}))
 
 
 class PictureForm(forms.ModelForm):

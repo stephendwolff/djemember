@@ -1,5 +1,11 @@
 # Install with: 'pip install -r requirements.txt'
 
-django
-django-crispy-forms
-django-allauth
+django==4.2.3
+django-crispy-forms==2.0
+django-allauth==0.54.0
+django-bulma
+# django-crispy-bulma
+-e git+https://github.com/jhotujec/crispy-forms-bulma.git#egg=django-crispy-bulma
+
+mariadb==1.1.7
+pillow==10.0.0

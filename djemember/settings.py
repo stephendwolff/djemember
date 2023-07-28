@@ -14,10 +14,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 from django.utils.translation import gettext_lazy as _
 import os
 from pathlib import Path
-home = str(Path.home())
-
-SECRETS_FILE = home + '/Development/djemember/djemember_secrets/secrets'
-exec(open(SECRETS_FILE).read())
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -93,17 +89,18 @@ WSGI_APPLICATION = 'djemember.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': DJANGO_DATABASE_ENGINE,
-        'NAME': DJANGO_DATABASE_NAME,
-        'USER': DJANGO_DATABASE_USER,
-        'PASSWORD': DJANGO_DATABASE_PASSWORD,
-        'HOST': DJANGO_DATABASE_HOST,
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
-DEBUG = DJANGO_DEBUG
-ALLOWED_HOSTS = DJANGO_ALLOWED_HOSTS
-SECRET_KEY = DJANGO_SECRET_KEY
-SESSION_COOKIE_SECURE = DJANGO_SESSION_COOKIE_SECURE
+DEBUG = True  # DJANGO_DEBUG
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', ]
+SECRET_KEY = "!@£$%^&*(!@£$%^&*---DJANGO_SECRET_KEY----!@£$%^&*(!@£$%^&*"
+SESSION_COOKIE_SECURE = False
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -145,7 +142,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
@@ -154,3 +150,6 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, 'static'),
 ]
+
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
